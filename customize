@@ -23,6 +23,10 @@ sed -i 's|ssh://git@github.com:|https://github.com/|g' \
 echo "* Run npm install to get the requirements"
 npm install /opt/imgapi/
 
+echo "* Import imgapi manifest"
+svccfg import /tmp/imgapi.xml
+rm /tmp/imgapi.xml
+
 # Clean up
 echo "* Cleaning up."
 rm -rf /root/*
