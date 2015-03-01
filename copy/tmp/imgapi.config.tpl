@@ -13,5 +13,11 @@
     "database": {
         "type": "local",
         "dir": "/var/db/imgapi/manifests"
+    },
+    "auth": {
+        "type": "basic",
+        "users": {
+           @AUTH_USERS@
+        }
     }
 }
