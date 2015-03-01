@@ -23,13 +23,8 @@ sed -i 's|ssh://git@github.com:\(.*\).git\(.*\)|https://github.com/\1\2|g' \
 echo "* Change working directory"
 cd /opt/imgapi/
 
-echo "* More workaround to install some deps manually"
-npm install fast
-npm install ldapjs
-npm install git+https://github.com/joyent/node-ufds
-
 echo "* Run npm install to get the requirements, ignore errors"
-npm install . || true
+npm install .
 
 echo "* Install template config file"
 mv /tmp/imgapi.config.tpl /opt/imgapi/etc/
