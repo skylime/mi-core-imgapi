@@ -552,7 +552,8 @@ angular.module('dsapi.filters', [])
       'uuid',
       'name',
       'version',
-      'os'
+      'os',
+      'description'
     ];
 
     var matchManifest = function(manifest, query) {

@@ -8,8 +8,16 @@
 		<dd>{{dataset.name}}</dd>
 		<dt>Version:</dt>
 		<dd>{{dataset.version}}</dd>
+		<dt>Description:</dt>
+		<dd>{{dataset.description}}</dd>
 		<dt>Published:</dt>
 		<dd date-from-now="dataset.published_at">{{dataset.published_at}}</dd>
+		<dt>Download-Size:</dt>
+		<dd>{{dataset.getDownloadSize()}}</dd>
+		<dt ng-show="dataset.stats_info['downloaded']">Snatched:</dt>
+		<dd ng-show="dataset.stats_info['downloaded']">{{dataset.stats_info['downloaded']}} times</dd>
+		<dt ng-show="dataset.homepage">Homepage:</dt>
+		<dd ng-show="dataset.homepage"><a href="{{dataset.homepage}}" target="_blank">{{dataset.homepage}}</a></dd>
 	</dl>
 </div>
 
