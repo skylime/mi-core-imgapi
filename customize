@@ -20,8 +20,15 @@ echo "* Workaround for npm install usage with git repo"
 sed -i 's|ssh://git@github.com:\(.*\).git\(.*\)|https://github.com/\1\2|g' \
 	/opt/imgapi/package.json
 
-echo "* Run npm install to get the requirements"
-npm install /opt/imgapi/
+echo "* Change working directory"
+cd /opt/imgapi/
+
+echo "* More workaround to install some deps manually"
+npm install fast
+npm install ldapjs
+
+echo "* Run npm install to get the requirements, ignore errors"
+npm install . || true
 
 echo "* Install template config file"
 mv /tmp/imgapi.config.tpl /opt/imgapi/etc/
