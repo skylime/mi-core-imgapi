@@ -4,16 +4,17 @@ IMGAPI_ADMIN=${IMGAPI_ADMIN:-$(mdata-get imgapi_admin 2>/dev/null)} || \
 mdata-put imgapi_admin ${IMGAPI_ADMIN}
 
 # Create authentication for users based on mdata
+USERS=""
 if mdata-get imgapi_users 1>/dev/null 2>&1; then
 	for list in $(mdata-get imgapi_users); do
 		u=$(echo ${line} | awk -F \: '{ print $1 }')
 		p=$(echo ${line} | awk -F \: '{ print $2 }')
 
-		USERS="\"${u}\": \"${p}\",\n${USERS}"
+		USERS="\"${u}\": \"${p}\", ${USERS}"
 	done
 fi
 
-USERS="${USERS}\n\"admin\": \"${IMGAPI_ADMIN}\""
+USERS="${USERS} \"admin\": \"${IMGAPI_ADMIN}\""
 
 # Modify config file with hostname and users
 host=$(hostname)
