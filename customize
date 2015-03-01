@@ -17,7 +17,7 @@ mkdir -p /opt/imgapi
 curl -L https://github.com/joyent/sdc-imgapi/archive/${SDC_IMGAPI_VERSION}.tar.gz | tar xz -C /opt/imgapi --strip-components=1
 
 echo "* Workaround for npm install usage with git repo"
-sed -i 's|ssh://git@github.com:|https://github.com/|g' \
+sed -i 's|ssh://git@github.com:\(.*\).git\(.*\)|https://github.com/\1\2|g' \
 	/opt/imgapi/package.json
 
 echo "* Run npm install to get the requirements"
