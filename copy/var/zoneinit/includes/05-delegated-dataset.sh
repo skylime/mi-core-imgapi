@@ -7,3 +7,6 @@ if zfs list ${DDS} 1>/dev/null 2>&1; then
 
 	zfs set mountpoint=/var/db/imgapi ${DDS}/imgapi
 fi
+
+# Fix permissions
+chown -R www:www /var/db/imgapi
