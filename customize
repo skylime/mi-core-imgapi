@@ -36,6 +36,9 @@ echo "* Import imgapi manifest"
 svccfg import /tmp/imgapi.xml
 rm /tmp/imgapi.xml
 
+echo "* Create nginx ssl folder"
+mkdir -p /opt/local/etc/nginx/ssl
+
 # Clean up
 echo "* Cleaning up."
 rm -rf /root/*
