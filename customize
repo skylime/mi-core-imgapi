@@ -26,6 +26,7 @@ cd /opt/imgapi/
 echo "* More workaround to install some deps manually"
 npm install fast
 npm install ldapjs
+npm install git+https://github.com/joyent/node-ufds
 
 echo "* Run npm install to get the requirements, ignore errors"
 npm install . || true
