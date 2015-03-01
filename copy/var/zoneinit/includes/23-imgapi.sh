@@ -18,8 +18,8 @@ USERS="${USERS} \"admin\": \"${IMGAPI_ADMIN}\""
 
 # Modify config file with hostname and users
 host=$(hostname)
-sed -e "s:@SERVER_NAME@:${host}:g" \
-	-e "s:@AUTH_USERS@:${USERS}:g" \
+sed -e "s|@SERVER_NAME@|${host}|g" \
+	-e "s|@AUTH_USERS@|${USERS}|g" \
 	/opt/imgapi/etc/imgapi.config.tpl > \
 	/opt/imgapi/etc/imgapi.config.json
 
