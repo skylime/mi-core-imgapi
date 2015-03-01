@@ -4,12 +4,24 @@
 
 # Custom versions and variables
 PATH=/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin
+SDC_IMGAPI_VERSION='20150219'
 
 # Exit if any commands fail
 set -o errexit
 
 # Configuring image specific packages
 echo "* Configuring image specific packages.";
+
+echo "* Download and extract imgapi"
+mkdir -p /opt/imgapi
+curl -L https://github.com/joyent/sdc-imgapi/archive/${SDC_IMGAPI_VERSION}.tar.gz | tar xz -C /opt/imgapi --strip-components=1
+
+echo "* Workaround for npm install usage with git repo"
+sed -i 's|ssh://git@github.com:|https://github.com/|g' \
+	/opt/imgapi/package.json
+
+echo "* Run npm install to get the requirements"
+npm install /opt/imgapi/
 
 # Clean up
 echo "* Cleaning up."
