@@ -29,6 +29,9 @@ npm install
 echo "* Install template config file"
 mv /tmp/imgapi.config.tpl /opt/imgapi/etc/
 
+echo "* Chown everything to www user"
+chown -R www:www /opt/imgapi
+
 echo "* Import imgapi manifest"
 svccfg import /tmp/imgapi.xml
 rm /tmp/imgapi.xml
