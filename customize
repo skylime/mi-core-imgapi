@@ -24,7 +24,7 @@ echo "* Run npm install to get the requirements"
 npm install /opt/imgapi/
 
 echo "* Install template config file"
-mv /tmp/imgapi.config.tpl /opt/imgapi/etc/etc/imgapi.config.json
+mv /tmp/imgapi.config.tpl /opt/imgapi/etc/
 
 echo "* Import imgapi manifest"
 svccfg import /tmp/imgapi.xml
