@@ -1,0 +1,6 @@
+# Workaround for npm install from GitHub
+[url "https://github.com/"]
+        insteadOf = git@github.com:
+        insteadOf = ssh://git@github.com/
+[url "https://"]
+        insteadOf = git://
