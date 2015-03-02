@@ -28,7 +28,7 @@ echo "* Change working directory"
 cd /opt/imgapi/
 
 echo "* Run npm install to get the requirements"
-npm install
+npm install .
 
 echo "* Create docs"
 make docs
