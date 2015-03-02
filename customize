@@ -46,6 +46,9 @@ rm /tmp/imgapi.xml
 echo "* Create nginx ssl folder"
 mkdir -p /opt/local/etc/nginx/ssl
 
+echo "* Install imgapi cli tools on the server"
+npm install -g git+https://github.com/joyent/sdc-imgapi-cli.git
+
 # Clean up
 echo "* Cleaning up."
 rm -rf /root/*
