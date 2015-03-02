@@ -110,6 +110,8 @@ angular.module('dsapi', [ 'ngRoute', 'dsapi.services', 'dsapi.directives', 'dsap
 function HomeCtrl($scope, $routeParams, $location, dsapiDatasets) {
   $scope.datasets = null;
   $scope.latest = null;
+  $scope.protocol = $location.protocol();
+  $scope.hostname = $location.host();
 
   if ($routeParams.query) {
     $scope.query = $routeParams.query;
@@ -704,7 +706,8 @@ function Dataset(data) {
     'homepage',
     'uuid',
     'published_at',
-    'stats_info'
+    'stats_info',
+    'channels'
   ];
 
   for (i in proxy_attrs) {
@@ -789,6 +792,9 @@ function Dataset(data) {
       this.metadata.push(new MetadataOption(options));
     }
   }
+}
+
+function ChannelList(data) {
 }
 
 function DatasetList() {
@@ -1365,7 +1371,7 @@ angular.module('dsapi.services', [], ['$provide', function($provide) {
     };
 
     /* initialize datasets list */
-    $http.get('/images')
+    $http.get('/images', { headers: { 'Accept-Version': '*' } })
       .success(function(data) {
         datasets.pushMany(data);
 
@@ -1374,7 +1380,7 @@ angular.module('dsapi.services', [], ['$provide', function($provide) {
       })
       .error(function(data, status, headers, config) {
         if (status == 404) {
-          $http.get('/images')
+          $http.get('/images', { headers: { 'Accept-Version': '*' } })
           .success(function(data) {
             datasets.pushMany(data);
 

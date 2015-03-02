@@ -23,9 +23,7 @@
 				<td>{{ds.version}}</td>
 				<td>{{ds.os}}</td>
 				<td class="hidden-xs" date-from-now="ds.published_at">{{ds.published_at}}</td>
-				<td ng-switch on="ds.getCreator()">
-					<span ng-switch-when="community" class="label label-primary">community</span>
-				</td>
+				<td ng-show="ds.channels"><span class="label label-default channels" ng-repeat="(key, value) in ds.channels">{{value}}</span> </td>
 			</tr>
 		</tbody>
 	</table>

@@ -5826,6 +5826,9 @@ body {
 table.table-hover.table-pointer tbody tr {
   cursor: pointer;
 }
+span.channels {
+  margin-right: 1em;
+}
 
 
 /*# sourceMappingURL=app.css.map*/
