@@ -1,7 +1,5 @@
 <div class="well well-sm">
-	<a href="/api/export/{{dataset.uuid}}" class="pull-right" title="export as tar-archive">
-		<span class="glyphicon glyphicon-cloud-download"></span>
-	</a>
+	<img class="pull-right" ng-if="dataset.icon == true" src="/images/{{ dataset.uuid }}/icon"/>
 
 	<dl class="dl-horizontal">
 		<dt>Name:</dt>
@@ -13,13 +11,15 @@
 		<dt>Published:</dt>
 		<dd date-from-now="dataset.published_at">{{dataset.published_at}}</dd>
 		<dt>Download-Size:</dt>
-		<dd>{{dataset.getDownloadSize()}}</dd>
+		<dd>{{dataset.getDownloadSize()}} <a href="/images/{{dataset.uuid}}/file" title="export as tar-archive"><span class="glyphicon glyphicon-cloud-download"></span></a></dd>
 		<dt ng-show="dataset.stats_info['downloaded']">Snatched:</dt>
 		<dd ng-show="dataset.stats_info['downloaded']">{{dataset.stats_info['downloaded']}} times</dd>
 		<dt ng-show="dataset.homepage">Homepage:</dt>
 		<dd ng-show="dataset.homepage"><a href="{{dataset.homepage}}" target="_blank">{{dataset.homepage}}</a></dd>
 		<dt ng-show="dataset.channels">Channels:</dt>
-		<dd ng-show="dataset.channels"><span class="label label-default channels" ng-repeat="(key, value) in dataset.channels">{{value}}</span> </dd>
+		<dd ng-show="dataset.channels">
+			<span class="label label-success channels" ng-repeat="(key, value) in dataset.channels" ng-if="value == 'release'"> {{value}} </span><span class="label label-default channels" ng-repeat="(key, value) in dataset.channels" ng-if="value != 'release'"> {{value}} </span>
+		</dd>
 	</dl>
 </div>
 
@@ -510,7 +510,8 @@
 				<tr>
 					<th class="col-sm-3">Name</th>
 					<th class="col-sm-5">Value</th>
-					<th class="col-sm-2">type</th>
+					<th class="col-sm-1">Type</th>
+					<th class="col-sm-1">Group</th>
 					<th class="col-sm-2"></th>
 				</tr>
 			</thead>
@@ -518,11 +519,15 @@
 				<tr ng-repeat="md in form.metadata">
 					<td>{{md.title}}</td>
 					<td>{{md.value | shorten:48}}</td>
+					<td ng-switch on="md.type">
+						<span ng-switch-when="bool" class="label label-warning">bool</span>
+						<span ng-switch-default class="label label-info">text</span>
+					</td>
 					<td ng-switch on="md.group">
-						<span ng-switch-when="password" class="label label-important">password</span>
-						<span ng-switch-when="string" class="label label-success">string</span>
+						<span ng-switch-when="password" class="label label-danger">password</span>
 						<span ng-switch-when="custom" class="label label-warning">custom</span>
-						<span ng-switch-default class="label label-info">{{md.type}}</span>
+						<span ng-switch-when="" class="label label-info">default</span>
+						<span ng-switch-default class="label label-primary">{{md.group}}</span>
 					</td>
 					<td>
 						<div class="pull-right">
@@ -538,7 +543,7 @@
 					</td>
 				</tr>
 				<tr class="success">
-					<td colspan="4">
+					<td colspan="5">
 						<a href="#edit-md-settings" data-toggle="modal" ng-click="addMetadata()">
 							<span class="glyphicon glyphicon-plus-sign"></span>
 							create new

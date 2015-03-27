@@ -1,6 +1,10 @@
 <div class="panel panel-default">
 	<div class="panel-heading">howto use the generator</div>
 	<div class="panel-body">
+		<div style="float:right" class="btn-group-vertical" role="group">
+			<button type="button" class="btn btn-default btn-sm">Release</button>
+			<button type="button" class="btn btn-default btn-sm">Dev</button>
+		</div>
 		<p class="text-muted">To open the configurator just klick on a dataset you want to use and fill out the configuration form.<br />
 			As soon as you're done klick the generate button at the end of the formular.</p>
 	</div>
@@ -30,8 +34,8 @@
 			<td>{{ds.version}}</td>
 			<td>{{ds.os}}</td>
 			<td class="hidden-xs" date-from-now="ds.published_at">{{ds.published_at}}</td>
-			<td ng-switch on="ds.getCreator()">
-				<span ng-switch-when="community" class="label label-primary">community</span>
+			<td ng-show="ds.channels" class="text-right">
+				<span class="label label-success channels" ng-repeat="(key, value) in ds.channels" ng-if="value == 'release'"> {{value}} </span><span class="label label-default channels" ng-repeat="(key, value) in ds.channels" ng-if="value != 'release'"> {{value}} </span>
 			</td>
 		</tr>
 	</tbody>

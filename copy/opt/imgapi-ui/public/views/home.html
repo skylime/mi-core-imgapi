@@ -23,7 +23,9 @@
 				<td>{{ds.version}}</td>
 				<td>{{ds.os}}</td>
 				<td class="hidden-xs" date-from-now="ds.published_at">{{ds.published_at}}</td>
-				<td ng-show="ds.channels"><span class="label label-default channels" ng-repeat="(key, value) in ds.channels">{{value}}</span> </td>
+				<td ng-show="ds.channels" class="text-right">
+					<span class="label label-success channels" ng-repeat="(key, value) in ds.channels" ng-if="value == 'release'"> {{value}} </span><span class="label label-default channels" ng-repeat="(key, value) in ds.channels" ng-if="value != 'release'"> {{value}} </span>
+				</td>
 			</tr>
 		</tbody>
 	</table>

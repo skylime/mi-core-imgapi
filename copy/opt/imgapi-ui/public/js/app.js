@@ -573,12 +573,12 @@ angular.module('dsapi.filters', [])
         kv = parts[i].match(/^(\w+):(.+)$/);
 
         if (kv && filterableKeys.indexOf(kv[1]) >= 0) {
-          if (manifest[kv[1]].toLowerCase().indexOf(kv[2].toLowerCase()) === 0) {
+          if (manifest[kv[1]] != undefined && manifest[kv[1]].toLowerCase().indexOf(kv[2].toLowerCase()) === 0) {
             match = true;
           }
         } else {
           for (k in searchableKeys) {
-            if (manifest[searchableKeys[k]].toLowerCase().search(parts[i]) >= 0) {
+            if (manifest[searchableKeys[k]] != undefined && manifest[searchableKeys[k]].toLowerCase().search(parts[i]) >= 0) {
               match = true;
             }
           }
@@ -703,11 +703,13 @@ function Dataset(data) {
     'version',
     'os',
     'description',
+    'icon',
     'homepage',
     'uuid',
     'published_at',
     'stats_info',
-    'channels'
+    'channels',
+    'tags'
   ];
 
   for (i in proxy_attrs) {
@@ -716,6 +718,25 @@ function Dataset(data) {
 
   /* parse date data */
   this.published_at = Date.parse(this.published_at);
+
+  /* get tags based on metadata list */
+  if(this.tags != undefined && this.tags['customer_metadata_keys']) {
+    this.mdata = this.tags['customer_metadata_keys'].split(" ");
+
+    for (var i = 0; i < this.mdata.length; i++) {
+      this.mdata_name  = this.mdata[i];
+      this.mdata_type  = this.tags['customer_metadata_type:' + this.mdata[i]]  || '';
+      this.mdata_description = this.tags['customer_metadata_description:' + this.mdata[i]] || '';
+
+      this.metadata.push(new MetadataOption({
+        'group': 'custom',
+        'name': this.mdata_name,
+        'title': this.mdata_name,
+        'description': this.mdata_description,
+        'type': this.mdata_type
+      }));
+    }
+  }
 
   /* determine usable metadata and populate metadata list */
   this.metadata.push(new MetadataOption({
@@ -779,22 +800,6 @@ function Dataset(data) {
     }
   }
 
-  if (this.manifest.hasOwnProperty('metadata_info')) {
-    var options;
-
-    for (i in this.manifest.metadata_info) {
-      options = this.manifest.metadata_info[i];
-
-      if (!options.hasOwnProperty('group')) {
-        options['group'] = 'custom';
-      }
-
-      this.metadata.push(new MetadataOption(options));
-    }
-  }
-}
-
-function ChannelList(data) {
 }
 
 function DatasetList() {
@@ -1371,7 +1376,7 @@ angular.module('dsapi.services', [], ['$provide', function($provide) {
     };
 
     /* initialize datasets list */
-    $http.get('/images', { headers: { 'Accept-Version': '*' } })
+    $http.get('/images?sort=published_at.desc&channel=*', { headers: { 'Accept-Version': '*' } })
       .success(function(data) {
         datasets.pushMany(data);
 
@@ -1380,7 +1385,7 @@ angular.module('dsapi.services', [], ['$provide', function($provide) {
       })
       .error(function(data, status, headers, config) {
         if (status == 404) {
-          $http.get('/images', { headers: { 'Accept-Version': '*' } })
+          $http.get('/images?sort=published_at.desc&channel=*', { headers: { 'Accept-Version': '*' } })
           .success(function(data) {
             datasets.pushMany(data);
 
