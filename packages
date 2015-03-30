@@ -1,4 +1,4 @@
 nginx
-gcc49
+gcc47
 gmake
 git
