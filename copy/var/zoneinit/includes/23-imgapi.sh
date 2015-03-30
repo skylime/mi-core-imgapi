@@ -14,7 +14,8 @@ if mdata-get imgapi_users 1>/dev/null 2>&1; then
 	done
 fi
 
-USERS="${USERS} \"admin\": \"${IMGAPI_ADMIN}\""
+IMGAPI_ADMIN_HASH=$(/opt/imgapi/bin/bcrypt-hash ${IMGAPI_ADMIN})
+USERS="${USERS} \"admin\": \"${IMGAPI_ADMIN_HASH}\""
 
 # Modify config file with hostname and users
 host=$(hostname)
