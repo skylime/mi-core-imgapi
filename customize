@@ -4,7 +4,7 @@
 
 # Custom versions and variables
 PATH=/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin
-SDC_IMGAPI_VERSION='20150319'
+SDC_IMGAPI_VERSION='20150514'
 
 # Exit if any commands fail
 set -o errexit
