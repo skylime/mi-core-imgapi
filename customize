@@ -4,34 +4,18 @@
 
 # Custom versions and variables
 PATH=/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin
-SDC_IMGAPI_VERSION='20150514'
+SDC_IMGAPI_VERSION='master-20170108T160615Z-gee38888'
 
 # Exit if any commands fail
 set -o errexit
 
 # Configuring image specific packages
-echo "* Configuring image specific packages.";
-
 echo "* Download and extract imgapi"
 mkdir -p /opt/imgapi
-curl -L https://github.com/joyent/sdc-imgapi/archive/${SDC_IMGAPI_VERSION}.tar.gz | tar xz -C /opt/imgapi --strip-components=1
+curl http://smartos.skylime.net/extra/imgapi-pkg-${SDC_IMGAPI_VERSION}.tar.bz2 | gtar xj -C /opt/imgapi --strip-components=4
 
-echo "* Ready for docs"
-curl -L https://github.com/trentm/restdown/archive/1.3.6.tar.gz | tar xz -C /opt/imgapi/deps/restdown --strip-components=1
-git clone https://github.com/joyent/restdown-brand-remora.git /opt/imgapi/deps/restdown-brand-remora/
-
-echo "* Workaround for npm install usage with git repo"
-sed -i 's|ssh://git@github.com:\(.*\).git\(.*\)|https://github.com/\1\2|g' \
-	/opt/imgapi/package.json
-
-echo "* Change working directory"
-cd /opt/imgapi/
-
-echo "* Run npm install to get the requirements"
-npm install .
-
-echo "* Create docs"
-make docs
+echo "* Extract UI"
+curl http://smartos.skylime.net/extra/imgapi-ui-${SDC_IMGAPI_VERSION}.tar.bz2 | gtar xj -C /opt
 
 echo "* Install template config file"
 mv /tmp/imgapi.config.tpl /opt/imgapi/etc/
@@ -45,9 +29,6 @@ rm /tmp/imgapi.xml
 
 echo "* Create nginx ssl folder"
 mkdir -p /opt/local/etc/nginx/ssl
-
-echo "* Install imgapi cli tools on the server"
-npm install -g git+https://github.com/joyent/sdc-imgapi-cli.git
 
 # Clean up
 echo "* Cleaning up."

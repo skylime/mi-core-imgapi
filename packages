@@ -1,4 +1,2 @@
 nginx
-gcc47
-gmake
-git
+coreutils
