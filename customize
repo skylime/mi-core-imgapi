@@ -27,6 +27,10 @@ echo "* Import imgapi manifest"
 svccfg import /tmp/imgapi.xml
 rm /tmp/imgapi.xml
 
+echo "* Create data folder in root and symlink"
+mkdir -p /data
+ln -svf /var/db/imgapi/ /data/
+
 echo "* Create nginx ssl folder"
 mkdir -p /opt/local/etc/nginx/ssl
 

@@ -17,12 +17,15 @@ fi
 IMGAPI_ADMIN_HASH=$(/opt/imgapi/bin/bcrypt-hash ${IMGAPI_ADMIN})
 IMGAPI_USERS="${IMGAPI_USERS} \"admin\": \"${IMGAPI_ADMIN_HASH}\""
 
+# Create new etc folder
+mkdir -p /data/imgapi/etc
+
 # Modify config file with hostname and users
 host=$(hostname)
 sed -e "s|@SERVER_NAME@|${host}|g" \
 	-e "s|@AUTH_USERS@|${IMGAPI_USERS}|g" \
 	/opt/imgapi/etc/imgapi.config.tpl > \
-	/opt/imgapi/etc/imgapi.config.json
+	/data/imgapi/etc/imgapi.config.json
 
 # Enable imgapi
 svcadm enable svc:/smartdc/site/imgapi
