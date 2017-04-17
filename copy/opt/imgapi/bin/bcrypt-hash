@@ -1,20 +1,13 @@
-#!/usr/bin/env node
+#!/usr/bin/env python
 
-var path = require('path');
-var bcrypt = require('bcrypt');
+import sys
+import bcrypt
+import warnings
 
-if(process.argv[2] == undefined) {
-  console.error('Missing password argument')
-  process.exit(1)
-}
+warnings.filterwarnings('ignore')
 
-password = process.argv[2]
-
-bcrypt.hash(password, 10, function (err, hash) {
-  if (err) {
-    console.error('%s: error hashing: %s',
-      path.basename(process.argv[1]), err);
-        process.exit(2);
-  }
-  console.log(hash);
-});
+if len(sys.argv) > 1:
+    print(bcrypt.hashpw(str(sys.argv[1]), bcrypt.gensalt()))
+else:
+    print('Missing password argument')
+    sys.exit(1)
