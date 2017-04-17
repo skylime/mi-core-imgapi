@@ -14,6 +14,7 @@
         "type": "local",
         "dir": "/var/db/imgapi/manifests"
     },
+    "authType": "none",
     "auth": {
         "type": "basic",
         "users": {
