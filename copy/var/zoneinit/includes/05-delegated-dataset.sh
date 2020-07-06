@@ -5,8 +5,9 @@ DDS=zones/${UUID}/data
 if zfs list ${DDS} 1>/dev/null 2>&1; then
 	zfs create ${DDS}/imgapi || true
 
-	zfs set mountpoint=/var/db/imgapi ${DDS}/imgapi
+	zfs set mountpoint=/data/imgapi ${DDS}/imgapi
 fi
 
 # Fix permissions
-chown -R www:www /var/db/imgapi
+mkdir -p /data/imgapi || true
+chown -R www:www /data/imgapi

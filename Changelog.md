@@ -1,5 +1,15 @@
 # Changelog
 
+## 20.1.0
+
+### New
+
+* Upgrade to 2020Q1 of core-base including imgapi upgrade to the latest version
+
+  Remove unused python and nodejs dependency, because notejs is build-in of the
+  imgapi. Also fix upload permissions for users to the API. Include the default
+  location of the delegate dataset used by the API.
+
 ## 16.4.0
 
 ### New

@@ -23,7 +23,7 @@
     </dependency>
 
     <exec_method type="method" name="start"
-        exec="/opt/local/bin/node /opt/imgapi/main.js &amp;" timeout_seconds="30">
+        exec="/opt/imgapi/bin/imgapi" timeout_seconds="30">
       <method_context working_directory="/opt/imgapi">
         <method_credential user="www" group="www" privileges="basic,net_privaddr"/>
       </method_context>
@@ -33,6 +33,7 @@
 
     <property_group name="startd" type="framework">
       <propval name="ignore_error" type="astring" value="core,signal"/>
+      <propval name='duration' type='astring' value='child'/>
     </property_group>
 
     <stability value="Unstable" />

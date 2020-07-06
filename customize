@@ -1,10 +1,11 @@
 #!/usr/bin/bash
+
 #
 # Put customizations to your image in this file.
 
 # Custom versions and variables
 PATH=/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin
-SDC_IMGAPI_VERSION='master-20170108T160615Z-gee38888'
+SDC_IMGAPI_VERSION='master-20200628T184348Z-g8024717'
 
 # Exit if any commands fail
 set -o errexit
@@ -12,24 +13,16 @@ set -o errexit
 # Configuring image specific packages
 echo "* Download and extract imgapi"
 mkdir -p /opt/imgapi
-curl https://smartos.skylime.net/extra/imgapi-pkg-${SDC_IMGAPI_VERSION}.tar.bz2 | gtar xj -C /opt/imgapi --strip-components=4
+curl https://smartos.skylime.net/extra/imgapi-pkg-${SDC_IMGAPI_VERSION}.tar.gz | gtar xz -C /opt/imgapi --strip-components=4
 
 echo "* Extract UI"
-curl https://smartos.skylime.net/extra/imgapi-ui-${SDC_IMGAPI_VERSION}.tar.bz2 | gtar xj -C /opt
-
-echo "* Install template config file"
-mv /tmp/imgapi.config.tpl /opt/imgapi/etc/
+curl https://smartos.skylime.net/extra/imgapi-ui-${SDC_IMGAPI_VERSION}.tar.gz | gtar xz -C /opt
 
 echo "* Chown everything to www user"
 chown -R www:www /opt/imgapi
 
-echo "* Import imgapi manifest"
-svccfg import /tmp/imgapi.xml
-rm /tmp/imgapi.xml
-
 echo "* Create data folder in root and symlink"
 mkdir -p /data
-ln -svf /var/db/imgapi/ /data/
 
 echo "* Create nginx ssl folder"
 mkdir -p /opt/local/etc/nginx/ssl
